@@ -1,0 +1,11 @@
+{
+  "name": "commandlinetodo",
+  "version": "1.0.0",
+  "description": "This program is a command line todo application",
+  "main": "index.ts",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^12.6.2"
+  }
+}
