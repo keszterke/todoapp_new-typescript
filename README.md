@@ -215,16 +215,18 @@ $ todo -l
 
 ### Remove task error handling
 
-1. - **Given** the terminal opened in the project directory - **When** the
-     application is ran with the `-r` argument - **Then** it should show an
-     error message like: `Unable to remove: no index provided` 2. - **Given**
-     the terminal opened in the project directory - And the file where you store
-     your data - And the file has less than 20 tasks - **When** the application
-     is ran with the `-r 20` argument - **Then** it should show an error message
-     like: `Unable to remove: index is out of bound` 3. - **Given** the terminal
-     opened in the project directory - **When** the application is ran with the
-     `-r apple` argument - **Then** it should show an error message like:
-     `Unable to remove: index is not a number`
+1. - **Given** the terminal opened in the project directory
+   - **When** the application is ran with the `-r` argument
+   - **Then** it should show an error message like: `Unable to remove: no index provided`
+
+2. - **Given** the terminal opened in the project directory
+   - And the file where you store your data
+   - And the file has less than 20 tasks
+   - **When** the application is ran with the `-r 20` argument
+   - **Then** it should show an error message like: `Unable to remove: index is out of bound`   
+3. - **Given** the terminal opened in the project directory
+   - **When** the application is ran with the `-r apple` argument
+   - **Then** it should show an error message like: `Unable to remove: index is not a number`
 
 ### Argument error handling
 
