@@ -119,36 +119,34 @@ if(process.argv[2] == '-a' && process.argv[3] == undefined){
 
 //Remove task
 
-if (process.argv[2] == '-r'){
-    let fileTask:string[] = readTasks();
-    console.log(fileTask)
+let index:number = Number(process.argv[3])
 
+if (process.argv[2] == '-r' && Number(process.argv[3]) == index){
+    let fileTask:string[] = readTasks();
     
     function removeIndexedElement(index):string[]{
-
-        for(let i:number = 0; i < fileTask.length; i++){
-            //console.log(fileTask[2])
-            fileTask.splice(index,1) // kitöröl minden utánna következőt
-        }
-        return fileTask
+        fileTask.splice(index,1);
+        return fileTask;
     }
 
-    let formatedWithRemoving:string[] = removeIndexedElement(2);
+    let formatedWithRemoving:string[] = removeIndexedElement(1);
+
     console.log(formatedWithRemoving)
+
 
     function readAllTaskafterFormat(tasks:string[]):string{
         let result: string = '';
     
         for(let i:number = 0; i < tasks.length; i++){
-            result += `${tasks[i]}\n`
+            result += `${tasks[i]}`+(`\n`)
         }
     
         return result;
     }
 
 
-        console.log(readAllTaskafterFormat(formatedWithRemoving))
-        let resultAfterRemoving:string = readAllTaskafterFormat(formatedWithRemoving)
+    //console.log(readAllTaskafterFormat(formatedWithRemoving))
+    let resultAfterRemoving:string = readAllTaskafterFormat(formatedWithRemoving)
 
 
     writeTaskToTheFile('../db.txt',resultAfterRemoving)
