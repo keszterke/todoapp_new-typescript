@@ -80,7 +80,7 @@ if(process.argv[2] == '-a' && process.argv[3] == newTask){
     function fileDataRow(){
         let fileTask:string[] = readTasks();
         fileTask.push(newTask);
-        console.log(fileTask);
+        //console.log(fileTask);
 
         return fileTask
     }
