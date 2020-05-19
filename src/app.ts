@@ -8,15 +8,15 @@ const fs = require('fs');
 
 // alap fájlolvasás function
 
-function readFile(filePath:string):string{
+function readFile(filePath:string):string {
 
     let fileContent:string = '';
 
-    try{
+    try {
         fileContent = readFileSync(filePath, 'utf8');
         
 
-   }catch(e){
+   } catch (e) {
         console.log('Error while reading file...');     
     }
  
@@ -24,21 +24,21 @@ function readFile(filePath:string):string{
 
 }
 
-if (process.argv.length < 3){
+if (process.argv.length < 3) {
     console.log(readFile('../printUsage.txt'))
 
     }
 
 //List all tasks    
 
-function readTasks():string[]{
+function readTasks():string[] {
     return fs.readFileSync('../db.txt', 'utf8').split(`\n`)
 }
 
-function readAllTask(tasks:string[]):string{
+function readAllTask(tasks:string[]):string {
     let result: string = '';
 
-    for(let i:number = 0; i < tasks.length; i++){
+    for (let i:number = 0; i < tasks.length; i++) {
         result += `${i+1} - ${tasks[i]}\n`
     }
 
@@ -47,27 +47,27 @@ function readAllTask(tasks:string[]):string{
 }
 //List all tasks  and //Empty list
 
-if (process.argv[2] == '-l'){
+if (process.argv[2] == '-l') {
     let fileContentTasks = readTasks()
-    if (fileContentTasks.length - 1 == 0){
+    if (fileContentTasks.length - 1 == 0) {
     
         console.log('No todos for today! :)')
 
     } 
-   else{
-       console.log(readAllTask(readTasks()))     
+    else {
+       console.log(readAllTask(readTasks()));     
     }
 }
 
-//Add new task , ez lesz a writefile function
+//Add new task
 
 
 function writeTaskToTheFile(filePath:string,fileContent:string){
-    try{
+    try {
         fs.writeFileSync(filePath, fileContent);
-        console.log('File write successfull')
+        console.log('File write successfull');
     
-    }catch(e){
+    } catch(e) {
         console.log('Unable  to write file:');
     } 
 }
@@ -75,45 +75,24 @@ function writeTaskToTheFile(filePath:string,fileContent:string){
 
 let newTask:string = process.argv[3];
 
-if(process.argv[2] == '-a' && process.argv[3] == newTask){
+if (process.argv[2] == '-a' && process.argv[3] == newTask) {
 
-    function fileDataRow(){
-        let fileTask:string[] = readTasks();
-        fileTask.push(newTask);
-        //console.log(fileTask);
+    function addDataToRow(filePathfromRead:string):string{
+        let fileTask:string = readFile(filePathfromRead);
+        fileTask += newTask+('\n');
 
         return fileTask
     }
 
-    let fileContent:string[] = fileDataRow()
-
-    function addTodoLines():string{
-
-        let resultContent = '';
-
-        for(let i:number = 0; i < fileContent.length; i++){
-            
-    
-            //hogyan lehet a sortörést megcsinálni, hogy ne dobjon be egy plusz üres sort
-            resultContent += fileContent[i]+`\n`;     
-        }
-        return resultContent
-    }
-
-    
-
-    let formattedLines:string = addTodoLines()
-
-    console.log(formattedLines)
-    writeTaskToTheFile('../db.txt',formattedLines)
+    writeTaskToTheFile('../db.txt',addDataToRow('../db.txt'));
     
 
 }
 
 //Add new task error handling
 
-if(process.argv[2] == '-a' && process.argv[3] == undefined){
-    console.log('Unable to add: no task provided')
+if (process.argv[2] == '-a' && process.argv[3] == undefined) {
+    console.log('Unable to add: no task provided');
 }
 
 
@@ -121,33 +100,26 @@ if(process.argv[2] == '-a' && process.argv[3] == undefined){
 
 let index:number = Number(process.argv[3])
 
-if (process.argv[2] == '-r' && Number(process.argv[3]) == index){
+if (process.argv[2] == '-r' && Number(process.argv[3]) == index) {
     let fileTask:string[] = readTasks();
-    
-    function removeIndexedElement(index):string[]{
+
+    function removeIndexedElement(index):string[] {
         fileTask.splice(index,1);
         return fileTask;
     }
 
-    let formatedWithRemoving:string[] = removeIndexedElement(1);
 
-    console.log(formatedWithRemoving)
-
-
-    function readAllTaskafterFormat(tasks:string[]):string{
+    function readAllTaskafterFormat(tasks:string[]):string {
         let result: string = '';
-    
-        for(let i:number = 0; i < tasks.length; i++){
-            result += `${tasks[i]}`+(`\n`)
+
+        for (let i:number = 0; i < tasks.length; i++) {
+            result += `${tasks[i]}`+(`\n`);
         }
     
         return result;
     }
 
-
-    //console.log(readAllTaskafterFormat(formatedWithRemoving))
-    let resultAfterRemoving:string = readAllTaskafterFormat(formatedWithRemoving)
-
+    let resultAfterRemoving:string = readAllTaskafterFormat(removeIndexedElement(index));
 
     writeTaskToTheFile('../db.txt',resultAfterRemoving)
 
